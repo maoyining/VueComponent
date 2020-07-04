@@ -1,13 +1,16 @@
 <template>
-  <div class="wrapper">
+<div class="wrapper">
+  <div class="pic-wrapper" @keyup.left="prev()" @keyup.right="next()">
     <div class="wrapper-button">
       <button class="button-left" @click="prev">&lt;</button>
     </div>
     <slot name="content" :attribute="imageList[currentIndex]"></slot>
-    <div class="wrapper-button">
+    <div class="wrapper-button" >
       <button class="button-right" @click="next">&gt;</button>
     </div>
   </div>
+  <div class="current-pic">{{this.currentIndex+1}}</div>
+</div>
 </template>
 
 <script>
@@ -15,7 +18,7 @@ export default {
   name:'NeighborSwitch',
   props:{
     data: Array,
-    value: Number
+    value: Number,
   },
   data(){
     return {
@@ -25,7 +28,7 @@ export default {
   },
   methods:{
     next(){
-      if(this.currentIndex<this.imageList.length-1){
+      if(this.currentIndex < this.imageList.length-1){
         this.currentIndex++;
       }else{
         this.currentIndex = 0;
@@ -45,13 +48,16 @@ export default {
 <style scoped>
 .wrapper{
   width:800px;
+}
+.pic-wrapper{
+  width:800px;
   height:400px;
   line-height:400px;
   border:solid 1px #eee;
   background-size: contain;
   position: relative;
 }
-.wrapper img{
+.pic-wrapper img{
   width:600px;
   height:400px;
   vertical-align: top;
@@ -75,5 +81,14 @@ export default {
   outline: none;
   cursor: pointer;
 }
-
+.current-pic {
+  width:40px;
+  height:40px;
+  border:1px solid #eee;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  margin:10px auto;
+  color:#ccc
+}
 </style>
