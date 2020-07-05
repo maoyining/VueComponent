@@ -1,15 +1,20 @@
 <template>
 <div class="wrapper">
-  <div class="pic-wrapper" @keyup.left="prev()" @keyup.right="next()">
-    <div class="wrapper-button">
-      <button class="button-left" @click="prev">&lt;</button>
+  <div class="pic-wrapper">
+    <div  v-if="loading">
+      {{loadingText}}
     </div>
-    <slot name="content" :attribute="imageList[currentIndex]"></slot>
-    <div class="wrapper-button" >
-      <button class="button-right" @click="next">&gt;</button>
+    <div v-else>
+      <div class="wrapper-button" @click="prev($event)">
+        <slot name="prev" :disabled="disabled"></slot>
+      </div>
+      <slot name="content" :item="imageList[currentIndex]"></slot>
+      <div class="wrapper-button" @click="next($event)">
+        <slot name="next" :disabled="disabled"></slot>
+      </div>
     </div>
   </div>
-  <div class="current-pic">{{this.currentIndex+1}}</div>
+  <div class="current-pic">{{currentIndex+1}}</div>
 </div>
 </template>
 
@@ -19,26 +24,46 @@ export default {
   props:{
     data: Array,
     value: Number,
+    loading: Boolean,
+    loadingText: String,
+    disabled: Boolean
   },
   data(){
     return {
       currentIndex: this.value,
-      imageList: this.data
+      imageList: this.data,
     }
   },
+  mounted() {
+    document.addEventListener('keyup',this.handleKeyUp)
+  },
+  beforeDestroy(){
+    document.removeEventListener('keyup',this.handleKeyUp)
+  },
   methods:{
-    next(){
-      if(this.currentIndex < this.imageList.length-1){
-        this.currentIndex++;
-      }else{
-        this.currentIndex = 0;
+    handleKeyUp(e) {
+      if(e.key==='ArrowRight'){
+        this.next(e)
+      } else if (e.key==='ArrowLeft') {
+        this.prev(e)
       }
     },
-    prev(){
-      if(this.currentIndex!==0){
-        this.currentIndex--;
-      }else{
-        this.currentIndex = this.imageList.length-1
+    next(e){
+      if(e.target.nodeName==="BUTTON" || e.key==='ArrowRight'){
+        if(this.currentIndex < this.imageList.length-1){
+          this.currentIndex++
+        }else{
+          this.currentIndex = 0
+        }
+      }
+    },
+    prev(e){
+      if(e.target.nodeName==="BUTTON" || e.key==='ArrowLeft'){
+        if(this.currentIndex!==0){
+        this.currentIndex--
+        }else{
+          this.currentIndex = this.imageList.length-1
+        }
       }
     }
   }
@@ -69,15 +94,9 @@ export default {
   height:100%;
   vertical-align: top;
 }
-.button-right,.button-left {
+.wrapper-button button{
   display:inline-block;
   margin:0 auto;
-  border-radius: 50%;
-  width:50px;
-  height:50px;
-  border:0;
-  font-size:25px;
-  color:#ccc;
   outline: none;
   cursor: pointer;
 }
