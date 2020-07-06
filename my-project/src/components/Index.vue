@@ -1,6 +1,6 @@
 <template>
 <div>
-  <neighbor-switch
+  <neighbor-switch class="wrapper"
     :data="imageList"
     v-model="currentIndex"
     :loading="loading"
@@ -52,6 +52,10 @@ export default {
 }
 </script>
 <style scoped>
+  .wrapper{
+    width:1000px;
+    height:600px;
+  }
   .self-button{
     border-radius: 50%;
     width:50px;

@@ -5,11 +5,11 @@
       {{loadingText}}
     </div>
     <div v-else>
-      <div class="wrapper-button" @click="prev($event)">
+      <div class="wrapper-button-left" @click="prev($event)">
         <slot name="prev" :disabled="disabled"></slot>
       </div>
       <slot name="content" :item="imageList[currentIndex]"></slot>
-      <div class="wrapper-button" @click="next($event)">
+      <div class="wrapper-button-right" @click="next($event)">
         <slot name="next" :disabled="disabled"></slot>
       </div>
     </div>
@@ -72,29 +72,41 @@ export default {
 
 <style scoped>
 .wrapper{
-  width:800px;
+  width:100%;
 }
 .pic-wrapper{
-  width:800px;
-  height:400px;
-  line-height:400px;
+  width:100%;
+  height:100%;
+  overflow: hidden;
   border:solid 1px #eee;
-  background-size: contain;
-  position: relative;
+  position:relative;
 }
 .pic-wrapper img{
-  width:600px;
-  height:400px;
-  vertical-align: top;
+  width:80%;
+  display:block;
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
 }
-.wrapper-button{
-  line-height:400px;
-  display:inline-block;
-  width:100px;
-  height:100%;
+.wrapper-button-left{
+  width:10%;
   vertical-align: top;
+  float:left;
+  position:absolute;
+  top:50%;
+  transform: translateY(-50%);
 }
-.wrapper-button button{
+.wrapper-button-right{
+  width:10%;
+  vertical-align: top;
+  float:right;
+  position:absolute;
+  left:90%;
+  top:50%;
+  transform: translateY(-50%);
+}
+.wrapper-button-left button,.wrapper-button-right button{
   display:inline-block;
   margin:0 auto;
   outline: none;
