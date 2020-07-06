@@ -9,7 +9,9 @@
   >
     <!-- 自定义的button -->
     <template v-slot:prev="scoped">
-      <button :disabled="scoped.disabled" class="self-button" >&lt;</button>
+      <button :disabled="scoped.disabled">
+        <div class="self-button">&lt;</div>
+        </button>
     </template>
 
     <!-- 自定义的图片列表内容content -->
@@ -19,7 +21,7 @@
 
     <!-- 自定义的button -->
     <template v-slot:next="scoped">
-      <button :disabled="scoped.disabled" class="self-button">&gt;</button>
+      <button :disabled="scoped.disabled">&gt;</button>
     </template>
   </neighbor-switch>
 </div>
@@ -60,9 +62,11 @@ export default {
     border-radius: 50%;
     width:50px;
     height:50px;
+    line-height:50px;
     border:0;
     font-size:25px;
     color:#ccc;
+    background: #eee;
   }
 </style>>
 

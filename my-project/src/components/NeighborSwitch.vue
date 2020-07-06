@@ -111,6 +111,9 @@ export default {
   margin:0 auto;
   outline: none;
   cursor: pointer;
+  border:0;
+  padding: 0px;
+  background-color:transparent ;
 }
 .current-pic {
   width:40px;
